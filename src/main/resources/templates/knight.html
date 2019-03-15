@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Knight</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <br>
+    Aktualny czas: <span th:text="${timecomponent.time}"/>
+    <br>
+    <table class="table table-sm">
+        <thread>
+            <tr>
+                <td class="font-weight-bold">Imię</td>
+                <td th:text="${knight.name}"></td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Wiek</td>
+                <td th:text="${knight.age}"></td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Poziom</td>
+                <td th:text="${knight.level}"></td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Złoto</td>
+                <td><span th:text="${playerinformation.gold}"/></td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Aktualne zadanie</td>
+                <td>
+                <span th:if="${knight.quest==null}">Brak aktualnego zadania - <a
+                        th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                    <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"/>
+                </td>
+            </tr>
+        </thread>
+    </table>
+    <div class="form-group">
+        <a href="/knights" class="btn btn-outline-dark">Wróć do listy rycerzy</a>
+    </div>
+</div>
+</body>
+</html>

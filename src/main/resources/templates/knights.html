@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Knights list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <br>
+    Aktualny czas: <span th:text="${timecomponent.time}"></span>
+    <br>
+    Posiadane zloto <span th:text="${playerinformation.gold}"></span>
+    <br>
+    <a th:href="${'/checkQuests'}">Aktualizuj zadanie</a>
+    <table class="table table-sm">
+        <thread>
+            <tr>
+                <td class="font-weight-bold">ID</td>
+                <td class="font-weight-bold">Imię</td>
+                <td class="font-weight-bold">Poziom</td>
+                <td class="font-weight-bold">Zadanie</td>
+                <td></td>
+            </tr>
+        </thread>
+        <tbody th:each="knight : ${knights}">
+        <tr>
+            <th scope="row" th:text="${knight.id}"></th>
+            <td th:text="${knight.name}"></td>
+            <td th:text="${knight.level}"></td>
+            <td>
+                <span th:if="${knight.quest==null}">Brak aktualnego zadania - <a
+                        th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"></span>
+            </td>
+            <td><a th:href="${'/knight?id='+knight.id}">Podgląd</a></td>
+            <td><a th:href="${'/knight/delete/'+knight.id}">Usuń</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <a href="/newknight" class="btn btn-outline-success">Rekrutuj nowego rycerza</a>
+    </div>
+    <div class="form-group">
+        <form action="" th:action="${knightRepository.createRandomKnight()}" method="get">
+            <input type="submit" value="Utwórz losowego rycerza" class="btn btn-outline-dark"/>
+        </form>
+    </div>
+    <div class="form-group">
+        <form action="#" th:action="@{/logout}" method="post">
+            <!--<a class="btn btn-outline-dark">Wyloguj</a>-->
+            <input type="submit" value="Wyloguj" class="btn btn-outline-danger"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
